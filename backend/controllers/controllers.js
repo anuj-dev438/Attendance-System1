@@ -1,8 +1,23 @@
+
 import Student from "../models/Student.js";
 
 export const getStudents = async (req, res) => {
   try {
-    const students = await Student.find().sort({ rollNo: 1 });
+    const { branch, semester } = req.query;
+
+    const filter = {};
+
+    if (branch) {
+      filter.branch = branch;
+    }
+
+    if (semester) {
+      filter.semester = Number(semester);
+    }
+
+    const students = await Student.find(filter).sort({
+      rollNo: 1,
+    });
 
     res.status(200).json({
       success: true,
@@ -10,6 +25,8 @@ export const getStudents = async (req, res) => {
       students,
     });
   } catch (error) {
+    console.error("Get Students Error:", error);
+
     res.status(500).json({
       success: false,
       message: "Failed to fetch students",
@@ -19,12 +36,12 @@ export const getStudents = async (req, res) => {
 
 export const addStudent = async (req, res) => {
   try {
-    const { name, rollNo, course, semester } = req.body;
+    const { name, rollNo, branch, semester } = req.body;
 
     const student = await Student.create({
       name,
       rollNo,
-      course,
+      branch,
       semester,
     });
 
@@ -40,3 +57,4 @@ export const addStudent = async (req, res) => {
     });
   }
 };
+

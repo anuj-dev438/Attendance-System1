@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
+
 const API_URL = "http://localhost:5000/api";
 
 export default function AttendancePage() {
@@ -17,7 +18,7 @@ export default function AttendancePage() {
   const [attendance, setAttendance] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-
+const [subjectName, setSubjectName] = useState("");
   // Check teacher login
   useEffect(() => {
     const token = localStorage.getItem("teacherToken");
@@ -26,6 +27,34 @@ export default function AttendancePage() {
       router.replace("/teacher-login");
     }
   }, [router]);
+
+
+// Fetch subject name
+useEffect(() => {
+  if (!subject) return;
+
+  const fetchSubject = async () => {
+    try {
+      const response = await fetch(
+        `${API_URL}/subjects/${subject}`
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Failed to fetch subject"
+        );
+      }
+
+      setSubjectName(data.subject?.name || "");
+    } catch (error) {
+      console.error("Subject Error:", error);
+    }
+  };
+
+  fetchSubject();
+}, [subject]);
 
   // Fetch students
   useEffect(() => {
@@ -179,7 +208,8 @@ export default function AttendancePage() {
 
               <p className="mt-2 text-sm text-gray-500">
                 Branch: {branch} &nbsp; | &nbsp;
-                Semester: {semester}
+                Semester: {semester} &nbsp; | &nbsp;
+                subject:{subjectName}
               </p>
 
             </div>

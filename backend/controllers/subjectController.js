@@ -56,3 +56,29 @@ export const getSubjects = async (req, res) => {
     });
   }
 };
+
+// Get single subject by ID
+export const getSubjectById = async (req, res) => {
+  try {
+    const subject = await Subject.findById(req.params.id);
+
+    if (!subject) {
+      return res.status(404).json({
+        success: false,
+        message: "Subject not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      subject,
+    });
+  } catch (error) {
+    console.error("Get Subject Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
