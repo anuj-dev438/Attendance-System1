@@ -272,21 +272,7 @@ export default function Home() {
                 research, innovation and overall student development.
               </p>
 
-              <button
-  type="button"
-  onClick={() => {
-    console.log("Subject ID:", subject);
-
-    
-
-    router.push(`/attendance/percentage?subject=${subject}`);
-  }}
-  className="rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 mt-4"
->
-  View Percentage
-   //<ArrowRight size={17} />
-</button>
-
+  
               
             </div>
 
