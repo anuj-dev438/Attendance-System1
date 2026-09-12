@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const API_URL = "http://localhost:5000/api";
 
-export default function AttendancePercentage() {
+ function AttendancePercentage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -138,5 +138,13 @@ export default function AttendancePercentage() {
       </div>
 
     </div>
+  );
+}
+
+export default function PercentagePage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <AttendancePercentage />
+    </Suspense>
   );
 }

@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 
 const API_URL = "http://localhost:5000/api";
 
-export default function AttendanceContent() {
+ function AttendanceContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
