@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 
 const API_URL = "http://localhost:5000/api";
 
-export default function AttendancePage() {
+export default function AttendanceContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -377,5 +377,12 @@ useEffect(() => {
       </div>
 
     </div>
+  );
+}
+export default function AttendancePage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <AttendanceContent />
+    </Suspense>
   );
 }
