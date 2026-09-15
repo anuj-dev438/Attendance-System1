@@ -15,14 +15,7 @@ export default function TeacherPage() {
   const [subjects, setSubjects] = useState([]);
   const [loadingSubjects, setLoadingSubjects] = useState(false);
 
-  // Protect teacher page
-  useEffect(() => {
-    const token = localStorage.getItem("teacherToken");
-
-    if (!token) {
-      router.replace("/teacher-login");
-    }
-  }, [router]);
+ 
 
   // Branch change
   const handleBranchChange = (value) => {
@@ -73,22 +66,7 @@ export default function TeacherPage() {
     fetchSubjects();
   }, [branch, semester]);
 
-  // Start Attendance
-  const startAttendance = () => {
-    if (!branch || !semester || !subject) {
-      alert("Please select Branch, Semester and Subject");
-      return;
-    }
-
-    router.push(
-      `/attendance?branch=${encodeURIComponent(
-        branch
-      )}&semester=${encodeURIComponent(
-        semester
-      )}&subject=${encodeURIComponent(subject)}`
-    );
-  };
-
+  
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
 
@@ -98,11 +76,11 @@ export default function TeacherPage() {
         <div className="mb-6 rounded-2xl bg-white p-6 shadow-sm">
 
           <h1 className="text-2xl font-bold text-gray-900">
-            Teacher Dashboard
+            Student Dashboard
           </h1>
 
           <p className="mt-1 text-sm text-gray-500">
-            Select class details to start attendance
+            Check your attendance percentage
           </p>
 
         </div>
@@ -221,23 +199,7 @@ export default function TeacherPage() {
   View Percentage
 </button>
 
-          {/* Start Button */}
-          <div className="mt-6 flex justify-end">
-
-            <button
-              onClick={startAttendance}
-              disabled={
-                !branch ||
-                !semester ||
-                !subject ||
-                loadingSubjects
-              }
-              className="rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Start Attendance
-            </button>
-
-          </div>
+        
 
         </div>
 

@@ -1,522 +1,492 @@
-
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   BookOpen,
-  Building2,
   GraduationCap,
   Users,
-  CalendarDays,
   MapPin,
-  ChevronRight
+  Phone,
+  Mail,
+  Menu,
+  X,
+  ChevronRight,
+  FlaskConical,
+  Building2,
 } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { label: "About", href: "#about" },
+    { label: "Departments", href: "#departments" },
+    { label: "Notices", href: "#notices" },
+    { label: "Contact", href: "#contact" },
+  ];
 
   const departments = [
-    "Computer Science & Engineering",
-    "Electronics & Communication Engineering",
-    "Electrical Engineering",
-    "Mechanical Engineering",
-    "Civil Engineering",
-    "Chemical Engineering",
-    "Information Technology",
-    "M.B.A.",
+    { name: "Computer Science & Engineering", short: "CSE", level: "B.Tech / M.Tech" },
+    { name: "Information Technology", short: "IT", level: "B.Tech" },
+    { name: "Electronics & Communication Engineering", short: "ECE", level: "B.Tech / M.Tech" },
+    { name: "Electrical Engineering", short: "EE", level: "B.Tech" },
+    { name: "Mechanical Engineering", short: "ME", level: "B.Tech / M.Tech" },
+    { name: "Civil Engineering", short: "CE", level: "B.Tech" },
+    { name: "Chemical Engineering", short: "ChE", level: "B.Tech" },
+    { name: "Business Administration", short: "MBA", level: "Post Graduate" },
   ];
 
   const notices = [
-    "Admission 2026-2027 – Uttar Pradesh Technical Admission Counselling",
-    "Academic Calendar for Session 2026-27",
-    "M.Tech Admission Session 2026-27",
-    "Internal Branch Sliding Notice",
+    {
+      title: "Admission 2026–27 — Uttar Pradesh Technical Admission Counselling",
+      date: "12 Sep 2026",
+      tag: "Admission",
+    },
+    {
+      title: "Academic calendar released for session 2026–27",
+      date: "05 Sep 2026",
+      tag: "Academics",
+    },
+    {
+      title: "M.Tech admission open for session 2026–27",
+      date: "28 Aug 2026",
+      tag: "Admission",
+    },
+    {
+      title: "Internal branch sliding — last date to apply",
+      date: "20 Aug 2026",
+      tag: "Students",
+    },
+  ];
+
+  const highlights = [
+    {
+      icon: GraduationCap,
+      title: "Academics",
+      text: "Eight departments offering undergraduate and postgraduate programmes.",
+    },
+    {
+      icon: FlaskConical,
+      title: "Research",
+      text: "Departmental labs and project work guided by the faculty.",
+    },
+    {
+      icon: Users,
+      title: "Campus life",
+      text: "Hostels, sports grounds, technical societies and cultural events.",
+    },
+    {
+      icon: Building2,
+      title: "Placements",
+      text: "Training and placement cell connecting students with recruiters.",
+    },
   ];
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
+    <main className="min-h-screen bg-[#FAF7F1] font-sans text-[#2A211B] antialiased">
+      {/* ================= TOP BAR ================= */}
+      <div className="hidden bg-[#4A1119] text-[#E8D6B0] md:block">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2 text-xs">
+          <p>An autonomous institute funded by the Government of Uttar Pradesh</p>
+          <div className="flex items-center gap-5">
+            <span className="flex items-center gap-1.5">
+              <Phone size={13} /> 0510-2980211
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Mail size={13} /> director@bietjhs.ac.in
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* ================= NAVBAR ================= */}
-      <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <header className="sticky top-0 z-50 border-b-2 border-[#B98A38] bg-[#FAF7F1]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
+          <a href="#home" className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#B98A38] bg-[#7B1E2B] text-[#F3E2BF]">
+              <GraduationCap size={24} />
+            </span>
+            <span>
+              <span className="block font-serif text-lg font-bold leading-none text-[#7B1E2B]">
+                BIET Jhansi
+              </span>
+              <span className="mt-1 hidden text-[11px] leading-tight text-[#6B5B4E] sm:block">
+                Bundelkhand Institute of Engineering &amp; Technology
+              </span>
+            </span>
+          </a>
 
-          {/* Logo / Name */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-900 text-white shadow-lg">
-              <GraduationCap size={28} />
-            </div>
-
-            <div>
-              <h1 className="text-sm font-extrabold leading-tight text-blue-950 sm:text-base">
-                BIET
-              </h1>
-              <p className="hidden max-w-xs text-xs font-medium text-slate-500 sm:block">
-                Bundelkhand Institute of Engineering & Technology
-              </p>
-            </div>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="hidden items-center gap-7 md:flex">
-            <a href="#home" className="text-sm font-semibold hover:text-blue-700">
-              Home
-            </a>
-
-            <a href="#about" className="text-sm font-semibold hover:text-blue-700">
-              About
-            </a>
-
-            <a href="#departments" className="text-sm font-semibold hover:text-blue-700">
-              Departments
-            </a>
-
-            <a href="#notices" className="text-sm font-semibold hover:text-blue-700">
-              Notices
-            </a>
-
-            <a href="#contact" className="text-sm font-semibold hover:text-blue-700">
-              Contact
-            </a>
+          <nav className="hidden items-center gap-7 md:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="border-b-2 border-transparent pb-1 text-sm font-medium text-[#3D3128] transition-colors hover:border-[#B98A38] hover:text-[#7B1E2B] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7B1E2B]"
+              >
+                {link.label}
+              </a>
+            ))}
 
             <button
               onClick={() => router.push("/teacher-login")}
-              className="rounded-xl bg-blue-900 px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-blue-800 hover:scale-[1.02]"
+              className="rounded-sm bg-[#7B1E2B] px-5 py-2.5 text-sm font-semibold text-[#FAF7F1] transition-colors hover:bg-[#5F1621] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7B1E2B]"
             >
               Teacher login
             </button>
-          </div>
+          </nav>
 
-          {/* Mobile Attendance Button */}
           <button
-            onClick={() => router.push("/attendance")}
-            className="rounded-xl bg-blue-900 px-3 py-2 text-xs font-bold text-white md:hidden"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="rounded-sm border border-[#D6C6AE] p-2 text-[#7B1E2B] md:hidden"
           >
-            Attendance
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </nav>
+
+        {menuOpen && (
+          <div className="border-t border-[#E2D6C0] bg-[#FAF7F1] md:hidden">
+            <nav className="mx-auto max-w-6xl px-6 py-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block border-b border-[#EADFCB] py-3 text-sm font-medium text-[#3D3128]"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <div className="mt-4 grid gap-2">
+                <button
+                  onClick={() => router.push("/teacher-login")}
+                  className="rounded-sm bg-[#7B1E2B] px-4 py-3 text-sm font-semibold text-[#FAF7F1]"
+                >
+                  Teacher login
+                </button>
+                <button
+                  onClick={() => router.push("/student")}
+                  className="rounded-sm border border-[#7B1E2B] px-4 py-3 text-sm font-semibold text-[#7B1E2B]"
+                >
+                  Attendance portal
+                </button>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
 
       {/* ================= HERO ================= */}
-      <section
-        id="home"
-        className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900"
-      >
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
+      <section id="home" className="bg-[#7B1E2B] text-[#F7EFE2]">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-24">
+          <div>
+            <h1 className="font-serif text-4xl font-bold leading-[1.12] sm:text-5xl lg:text-[3.4rem]">
+              Bundelkhand Institute of Engineering &amp; Technology, Jhansi
+            </h1>
 
-          <div className="text-white">
-            <p className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-blue-200">
-              BIET Jhansi
+            <p className="mt-6 max-w-[58ch] text-base leading-8 text-[#EBD9BC]">
+              A state-funded autonomous institute in Bundelkhand, teaching
+              engineering and management to students from across Uttar Pradesh
+              and beyond.
             </p>
 
-            <h2 className="text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-              Bundelkhand Institute
-              <span className="block text-blue-300">
-                of Engineering & Technology
-              </span>
-            </h2>
-
-            <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg">
-              Empowering students through technical education, innovation,
-              research and professional excellence.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <button
-                onClick={() => router.push("/attendance")}
-                className="group flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-blue-950 shadow-xl transition hover:scale-[1.02]"
+                onClick={() => router.push("/student")}
+                className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#C79A43] px-7 py-3.5 text-sm font-bold text-[#3B1016] transition-colors hover:bg-[#D8AC54] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F7EFE2]"
               >
-                Open Attendance Portal
-                <ArrowRight
-                  size={18}
-                  className="transition group-hover:translate-x-1"
-                />
+                Open attendance portal
+                <ArrowRight size={17} />
               </button>
 
               <a
-                href="#about"
-                className="flex items-center justify-center rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20"
+                href="#departments"
+                className="inline-flex items-center justify-center rounded-sm border border-[#C79A43]/70 px-7 py-3.5 text-sm font-semibold text-[#F7EFE2] transition-colors hover:bg-[#5F1621] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F7EFE2]"
               >
-                Explore Institute
+              Departments
               </a>
             </div>
 
-            <div className="mt-8 flex items-center gap-2 text-sm text-slate-300">
-              <MapPin size={17} />
-              Jhansi, Uttar Pradesh
-            </div>
-          </div>
-
-          {/* Hero Card */}
-          <div className="relative">
-            <div className="rounded-3xl border border-white/10 bg-white/10 p-5 shadow-2xl backdrop-blur">
-              <div className="rounded-2xl bg-white p-6 text-slate-900">
-
-                <div className="mb-6 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-blue-700">
-                      Institute Portal
-                    </p>
-                    <h3 className="mt-1 text-2xl font-black">
-                      Academic Dashboard
-                    </h3>
-                  </div>
-
-                  <div className="rounded-xl bg-blue-100 p-3 text-blue-900">
-                    <Building2 size={26} />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-2xl bg-slate-50 p-5">
-                    <GraduationCap className="mb-3 text-blue-800" />
-                    <p className="text-2xl font-black">B.Tech</p>
-                    <p className="text-xs text-slate-500">
-                      Undergraduate Programs
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl bg-slate-50 p-5">
-                    <BookOpen className="mb-3 text-blue-800" />
-                    <p className="text-2xl font-black">M.Tech</p>
-                    <p className="text-xs text-slate-500">
-                      Postgraduate Programs
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl bg-slate-50 p-5">
-                    <Users className="mb-3 text-blue-800" />
-                    <p className="text-2xl font-black">Students</p>
-                    <p className="text-xs text-slate-500">
-                      Academic Community
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl bg-slate-50 p-5">
-                    <CalendarDays className="mb-3 text-blue-800" />
-                    <p className="text-2xl font-black">2026</p>
-                    <p className="text-xs text-slate-500">
-                      Academic Session
-                    </p>
-                  </div>
-                </div>
-
+            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-[#C79A43]/35 pt-7">
+              <div>
+                <dt className="text-xs text-[#D8C4A2]">Established</dt>
+                <dd className="font-serif text-2xl font-bold">1989</dd>
               </div>
+              <div>
+                <dt className="text-xs text-[#D8C4A2]">Departments</dt>
+                <dd className="font-serif text-2xl font-bold">8</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-[#D8C4A2]">Campus</dt>
+                <dd className="font-serif text-2xl font-bold">Jhansi</dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Portal card */}
+          <div className="rounded-sm border border-[#C79A43]/45 bg-[#5F1621] p-7">
+            <h2 className="font-serif text-2xl font-bold text-[#F7EFE2]">
+              Attendance portal
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-[#E0CBA9]">
+              Faculty mark attendance class by class. Students check their
+              subject-wise percentage before it falls short.
+            </p>
+
+            <ul className="mt-6 space-y-3 text-sm text-[#F0E2C8]">
+              {[
+                "Mark attendance for a full class in one screen",
+                "Subject-wise percentage for every student",
+                "Records kept session by session",
+              ].map((item) => (
+                <li key={item} className="flex gap-3">
+                  <ChevronRight size={17} className="mt-0.5 shrink-0 text-[#C79A43]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-7 grid gap-2">
+              <button
+                onClick={() => router.push("/student")}
+                className="rounded-sm bg-[#F7EFE2] px-5 py-3 text-sm font-bold text-[#7B1E2B] transition-colors hover:bg-white"
+              >
+                Go to attendance
+              </button>
+              <button
+                onClick={() => router.push("/teacher-login")}
+                className="rounded-sm border border-[#C79A43]/60 px-5 py-3 text-sm font-semibold text-[#F0E2C8] transition-colors hover:bg-[#7B1E2B]"
+              >
+                Teacher login
+              </button>
             </div>
           </div>
-
-        </div>
-      </section>
-
-      {/* ================= QUICK ACCESS ================= */}
-      <section className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-
-          <div className="rounded-2xl border bg-white p-6 shadow-sm">
-            <GraduationCap className="mb-4 text-blue-800" size={30} />
-            <h3 className="font-extrabold">Academic Programs</h3>
-            <p className="mt-2 text-sm text-slate-500">
-              Explore undergraduate and postgraduate programs.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border bg-white p-6 shadow-sm">
-            <BookOpen className="mb-4 text-blue-800" size={30} />
-            <h3 className="font-extrabold">Departments</h3>
-            <p className="mt-2 text-sm text-slate-500">
-              Explore departments and academic disciplines.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border bg-white p-6 shadow-sm">
-            <CalendarDays className="mb-4 text-blue-800" size={30} />
-            <h3 className="font-extrabold">Notices</h3>
-            <p className="mt-2 text-sm text-slate-500">
-              Stay updated with institute announcements.
-            </p>
-          </div>
-
-          <button
-            onClick={() => router.push("/attendance")}
-            className="rounded-2xl border bg-blue-900 p-6 text-left text-white shadow-lg transition hover:-translate-y-1 hover:bg-blue-800"
-          >
-            <Users className="mb-4" size={30} />
-            <h3 className="font-extrabold">Attendance Portal</h3>
-            <p className="mt-2 text-sm text-blue-100">
-              Manage and view student attendance.
-            </p>
-          </button>
-
         </div>
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section id="about" className="bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+      <section id="about" className="border-b border-[#E7DCC7]">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <h2 className="font-serif text-3xl font-bold text-[#7B1E2B] sm:text-4xl">
+              About the institute
+            </h2>
+            <div className="mt-5 h-[3px] w-20 bg-[#C79A43]" />
 
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <p className="mt-7 max-w-[62ch] leading-8 text-[#4A3D33]">
+              BIET Jhansi is an autonomous institute funded by the Government of
+              Uttar Pradesh. It runs undergraduate and postgraduate programmes in
+              engineering and management, and serves as a centre for technical
+              education in the Bundelkhand region.
+            </p>
 
-            <div>
-              <p className="text-sm font-extrabold uppercase tracking-widest text-blue-700">
-                About BIET
-              </p>
+            <p className="mt-5 max-w-[62ch] leading-8 text-[#4A3D33]">
+              The campus sits on Kanpur Road in Jhansi, with departmental
+              laboratories, a central library, hostels and sports facilities for
+              resident students.
+            </p>
 
-              <h2 className="mt-3 text-3xl font-black text-slate-950 sm:text-4xl">
-                Excellence in Technical Education
-              </h2>
+            <a
+              href="#notices"
+              className="mt-8 inline-flex items-center gap-2 border-b-2 border-[#C79A43] pb-1 text-sm font-semibold text-[#7B1E2B]"
+            >
+              Read the latest notices
+              <ArrowRight size={16} />
+            </a>
+          </div>
 
-              <p className="mt-6 leading-8 text-slate-600">
-                Bundelkhand Institute of Engineering & Technology, Jhansi
-                is an autonomous institute funded by the Government of
-                Uttar Pradesh. The institute focuses on technical education,
-                research, innovation and overall student development.
-              </p>
-
-  
-              
-            </div>
-
-            <div className="rounded-3xl bg-slate-100 p-8">
-              <div className="grid gap-5 sm:grid-cols-2">
-
-                <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <p className="text-3xl font-black text-blue-900">01</p>
-                  <p className="mt-2 font-bold">Academic Excellence</p>
-                  <p className="mt-2 text-sm text-slate-500">
-                    Focused technical and professional education.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <p className="text-3xl font-black text-blue-900">02</p>
-                  <p className="mt-2 font-bold">Research</p>
-                  <p className="mt-2 text-sm text-slate-500">
-                    Encouraging innovation and research-oriented learning.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <p className="text-3xl font-black text-blue-900">03</p>
-                  <p className="mt-2 font-bold">Campus Life</p>
-                  <p className="mt-2 text-sm text-slate-500">
-                    Sports, cultural and student activities.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <p className="text-3xl font-black text-blue-900">04</p>
-                  <p className="mt-2 font-bold">Industry Connect</p>
-                  <p className="mt-2 text-sm text-slate-500">
-                    Industry interaction and professional exposure.
-                  </p>
-                </div>
-
+          <div className="grid gap-px overflow-hidden rounded-sm bg-[#E2D6C0] sm:grid-cols-2">
+            {highlights.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="bg-[#FAF7F1] p-7">
+                <Icon size={26} className="text-[#7B1E2B]" strokeWidth={1.6} />
+                <h3 className="mt-4 font-serif text-lg font-bold">{title}</h3>
+                <p className="mt-2 text-sm leading-7 text-[#5E5147]">{text}</p>
               </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
 
       {/* ================= DEPARTMENTS ================= */}
-      <section id="departments" className="bg-slate-50">
-        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
-
-          <div className="mb-10">
-            <p className="text-sm font-extrabold uppercase tracking-widest text-blue-700">
-              Academics
+      <section id="departments" className="border-b border-[#E7DCC7] bg-[#F3EDE1]">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="font-serif text-3xl font-bold text-[#7B1E2B] sm:text-4xl">
+                Departments
+              </h2>
+              <div className="mt-5 h-[3px] w-20 bg-[#C79A43]" />
+            </div>
+            <p className="max-w-sm text-sm leading-7 text-[#5E5147]">
+              Eight teaching departments across engineering and management.
             </p>
-
-            <h2 className="mt-2 text-3xl font-black sm:text-4xl">
-              Our Departments
-            </h2>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {departments.map((department, index) => (
-              <div
-                key={department}
-                className="group flex items-center justify-between rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
+          <div className="mt-10 grid gap-px overflow-hidden rounded-sm bg-[#DFD2B9] sm:grid-cols-2 lg:grid-cols-4">
+            {departments.map((dept) => (
+              <a
+                key={dept.short}
+                href="#departments"
+                className="group bg-[#FAF7F1] p-6 transition-colors hover:bg-white focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#7B1E2B]"
               >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 font-black text-blue-900">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-
-                  <p className="text-sm font-bold">
-                    {department}
-                  </p>
-                </div>
-
-                <ChevronRight
-                  size={18}
-                  className="text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700"
-                />
-              </div>
+                <span className="font-serif text-xl font-bold text-[#C79A43]">
+                  {dept.short}
+                </span>
+                <h3 className="mt-3 text-sm font-semibold leading-6 text-[#2A211B]">
+                  {dept.name}
+                </h3>
+                <p className="mt-3 flex items-center gap-1 text-xs text-[#6B5B4E]">
+                  {dept.level}
+                  <ChevronRight
+                    size={14}
+                    className="text-[#7B1E2B] transition-transform group-hover:translate-x-1"
+                  />
+                </p>
+              </a>
             ))}
           </div>
-
         </div>
       </section>
 
       {/* ================= NOTICES ================= */}
-      <section id="notices" className="bg-white">
-        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
-
-          <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <section id="notices" className="border-b border-[#E7DCC7]">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <p className="text-sm font-extrabold uppercase tracking-widest text-blue-700">
-                Updates
-              </p>
-
-              <h2 className="mt-2 text-3xl font-black sm:text-4xl">
-                Latest Notices
+              <h2 className="font-serif text-3xl font-bold text-[#7B1E2B] sm:text-4xl">
+                Notices
               </h2>
+              <div className="mt-5 h-[3px] w-20 bg-[#C79A43]" />
             </div>
 
-            <button className="flex items-center gap-1 text-sm font-bold text-blue-800">
-              View All
+            <button className="inline-flex items-center gap-2 text-sm font-semibold text-[#7B1E2B] hover:underline">
+              See all notices
               <ArrowRight size={16} />
             </button>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border">
-            {notices.map((notice, index) => (
-              <div
-                key={notice}
-                className="flex items-center gap-4 border-b p-5 last:border-b-0 hover:bg-slate-50"
-              >
-                <div className="rounded-xl bg-blue-50 px-3 py-2 text-center">
-                  <p className="text-xs font-black text-blue-900">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                </div>
-
-                <p className="flex-1 text-sm font-semibold text-slate-700">
-                  {notice}
-                </p>
-
-                <ChevronRight size={18} className="text-slate-400" />
-              </div>
+          <ul className="mt-10 border-t border-[#E2D6C0]">
+            {notices.map((notice) => (
+              <li key={notice.title}>
+                <a
+                  href="#notices"
+                  className="flex flex-col gap-2 border-b border-[#E2D6C0] py-5 transition-colors hover:bg-[#F3EDE1] sm:flex-row sm:items-center sm:gap-6"
+                >
+                  <time className="w-28 shrink-0 text-xs text-[#6B5B4E]">
+                    {notice.date}
+                  </time>
+                  <span className="flex-1 text-sm font-medium leading-6 text-[#2A211B] sm:text-base">
+                    {notice.title}
+                  </span>
+                  <span className="w-fit rounded-sm bg-[#F0E6D2] px-2.5 py-1 text-xs font-semibold text-[#7B1E2B]">
+                    {notice.tag}
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
-
+          </ul>
         </div>
       </section>
 
       {/* ================= ATTENDANCE CTA ================= */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-gradient-to-r from-blue-950 to-blue-800 px-7 py-12 text-white shadow-xl sm:px-12">
-
-          <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-
-            <div>
-              <p className="text-sm font-bold uppercase tracking-widest text-blue-200">
-                Student & Faculty Portal
-              </p>
-
-              <h2 className="mt-2 text-3xl font-black sm:text-4xl">
-                Manage Attendance Easily
-              </h2>
-
-              <p className="mt-3 max-w-xl text-sm leading-6 text-blue-100">
-                Record attendance and monitor student attendance
-                percentages through the dedicated attendance portal.
-              </p>
-            </div>
-
-            <button
-              onClick={() => router.push("/attendance")}
-              className="flex shrink-0 items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-blue-950 transition hover:scale-[1.03]"
-            >
-              Open Attendance
-              <ArrowRight size={18} />
-            </button>
-
+      <section className="bg-[#4A1119] text-[#F7EFE2]">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-14 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="font-serif text-2xl font-bold sm:text-3xl">
+              Attendance, without the register
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-[#DCC7A6]">
+              Faculty mark the class in a minute. Students see where they stand.
+            </p>
           </div>
+
+          <button
+            onClick={() => router.push("/student")}
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-sm bg-[#C79A43] px-7 py-3.5 text-sm font-bold text-[#3B1016] transition-colors hover:bg-[#D8AC54]"
+          >
+            Open attendance portal
+            <ArrowRight size={17} />
+          </button>
         </div>
       </section>
 
       {/* ================= FOOTER ================= */}
-      <footer
-        id="contact"
-        className="bg-slate-950 text-slate-300"
-      >
-        <div className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
-
+      <footer id="contact" className="bg-[#2A211B] text-[#CFC2B2]">
+        <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid gap-10 md:grid-cols-3">
-
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-800 text-white">
-                  <GraduationCap />
-                </div>
-
-                <div>
-                  <p className="font-black text-white">BIET Jhansi</p>
-                  <p className="text-xs text-slate-400">
-                    Technical Education & Excellence
-                  </p>
-                </div>
+                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C79A43] text-[#C79A43]">
+                  <GraduationCap size={22} />
+                </span>
+                <span className="font-serif text-lg font-bold text-white">
+                  BIET Jhansi
+                </span>
               </div>
 
-              <p className="mt-5 max-w-md text-sm leading-6 text-slate-400">
-                Bundelkhand Institute of Engineering & Technology, Jhansi.
-                An autonomous institute funded by the U.P. Government.
+              <p className="mt-5 max-w-sm text-sm leading-7">
+                Bundelkhand Institute of Engineering &amp; Technology, an
+                autonomous institute funded by the Government of Uttar Pradesh.
               </p>
             </div>
 
             <div>
-              <h3 className="font-bold text-white">Quick Links</h3>
-
+              <h3 className="font-serif text-base font-bold text-white">
+                Quick links
+              </h3>
               <div className="mt-4 space-y-3 text-sm">
-                <a href="#home" className="block hover:text-white">
-                  Home
-                </a>
-
-                <a href="#about" className="block hover:text-white">
-                  About
-                </a>
-
-                <a href="#departments" className="block hover:text-white">
-                  Departments
-                </a>
-
+                {navLinks.map((link) => (
+                  <a key={link.href} href={link.href} className="block hover:text-white">
+                    {link.label}
+                  </a>
+                ))}
                 <button
                   onClick={() => router.push("/attendance")}
                   className="block hover:text-white"
                 >
-                  Attendance Portal
+                  Attendance portal
+                </button>
+                <button
+                  onClick={() => router.push("/teacher-login")}
+                  className="block hover:text-white"
+                >
+                  Teacher login
                 </button>
               </div>
             </div>
 
             <div>
-              <h3 className="font-bold text-white">Contact</h3>
-
-              <div className="mt-4 space-y-3 text-sm text-slate-400">
-                <p className="flex gap-2">
-                  <MapPin size={17} />
-                  Kanpur Road, NH-25, Jhansi, Uttar Pradesh - 284128
-                </p>
-
-                <p>Phone: 0510-2980211</p>
-
-                <p>Email: director@bietjhs.ac.in</p>
-              </div>
+              <h3 className="font-serif text-base font-bold text-white">Contact</h3>
+              <address className="mt-4 space-y-3 text-sm not-italic">
+                <span className="flex gap-2">
+                  <MapPin size={17} className="mt-0.5 shrink-0 text-[#C79A43]" />
+                  Kanpur Road, NH-25, Jhansi, Uttar Pradesh 284128
+                </span>
+                <span className="flex gap-2">
+                  <Phone size={17} className="shrink-0 text-[#C79A43]" />
+                  0510-2980211
+                </span>
+                <span className="flex gap-2">
+                  <Mail size={17} className="shrink-0 text-[#C79A43]" />
+                  director@bietjhs.ac.in
+                </span>
+              </address>
             </div>
-
           </div>
 
-          <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-slate-500">
-            © 2026 BIET Jhansi. All rights reserved.
+          <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-[#9E9184] sm:flex-row sm:justify-between">
+            <p>© 2026 BIET Jhansi. All rights reserved.</p>
+            <p className="flex items-center gap-1.5">
+              <BookOpen size={13} />
+              Academic session 2026–27
+            </p>
           </div>
-
         </div>
       </footer>
-
     </main>
   );
 }
-
-   

@@ -1,4 +1,5 @@
 import Attendance from "../models/Attendance.js";
+import Student from "../models/Student.js";
 
 // Save Attendance
 export const saveAttendance = async (req, res) => {
@@ -23,7 +24,7 @@ export const saveAttendance = async (req, res) => {
       })
     );
 
-    // Save new attendance
+    // Save attendance
     const savedAttendance = await Attendance.insertMany(records);
 
     return res.status(201).json({
@@ -45,61 +46,93 @@ export const saveAttendance = async (req, res) => {
 // Get Attendance Percentage
 export const getAttendancePercentage = async (req, res) => {
   try {
-    const { subjectId } = req.query;
+    const { subjectId, branch, semester } = req.query;
 
     // Validation
-    if (!subjectId) {
+    if (!subjectId || !branch || !semester) {
       return res.status(400).json({
         success: false,
-        message: "Subject ID is required",
+        message: "Subject ID, branch and semester are required",
       });
     }
 
-    // Get all attendance records for subject
+    // 1. Get students according to branch + semester
+    const students = await Student.find({
+      branch: branch,
+      semester: Number(semester),
+    }).select("_id name rollNo branch semester");
+
+    // 2. Get attendance records only for selected subject
+    // and selected students
     const records = await Attendance.find({
-      subjectId,
-    }).populate("studentId", "name");
+      subjectId: subjectId,
+      studentId: {
+        $in: students.map((student) => student._id),
+      },
+    });
 
-    const students = {};
+    // 3. Create attendance map
+    const attendanceMap = {};
 
-    // Calculate total and present
     records.forEach((record) => {
-      if (!record.studentId) return;
+      const studentId = record.studentId.toString();
 
-      const id = record.studentId._id.toString();
-
-      if (!students[id]) {
-        students[id] = {
-          name: record.studentId.name,
+      if (!attendanceMap[studentId]) {
+        attendanceMap[studentId] = {
           total: 0,
           present: 0,
         };
       }
 
-      students[id].total++;
+      attendanceMap[studentId].total++;
 
       if (record.status === "present") {
-        students[id].present++;
+        attendanceMap[studentId].present++;
       }
     });
 
-    // Calculate percentage
-    const result = Object.values(students).map((student) => ({
-      name: student.name,
-      percentage:
-        student.total === 0
+    // 4. Calculate percentage for every selected student
+    const result = students.map((student) => {
+      const id = student._id.toString();
+
+      const attendance = attendanceMap[id] || {
+        total: 0,
+        present: 0,
+      };
+
+      const percentage =
+        attendance.total === 0
           ? 0
           : Math.round(
-              (student.present / student.total) * 100
-            ),
-    }));
+              (attendance.present / attendance.total) * 100
+            );
 
+      return {
+        studentId: student._id,
+        name: student.name,
+        rollNo: student.rollNo,
+        branch: student.branch,
+        semester: student.semester,
+        totalClasses: attendance.total,
+        present: attendance.present,
+        percentage,
+      };
+    });
+
+    // 5. Send response
     return res.status(200).json({
       success: true,
+      branch,
+      semester: Number(semester),
+      subjectId,
       attendance: result,
     });
+
   } catch (error) {
-    console.error("Get Attendance Percentage Error:", error);
+    console.error(
+      "Get Attendance Percentage Error:",
+      error
+    );
 
     return res.status(500).json({
       success: false,

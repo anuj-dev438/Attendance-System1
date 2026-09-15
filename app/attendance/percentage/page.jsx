@@ -1,21 +1,23 @@
 "use client";
 
-import {Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const API_URL = "http://localhost:5000/api";
 
- function AttendancePercentage() {
+function AttendancePercentage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const subjectId = searchParams.get("subject");
+  const branch = searchParams.get("branch");
+  const semester = searchParams.get("semester");
 
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!subjectId) {
+    if (!subjectId || !branch || !semester) {
       setLoading(false);
       return;
     }
@@ -23,7 +25,7 @@ const API_URL = "http://localhost:5000/api";
     const fetchPercentage = async () => {
       try {
         const response = await fetch(
-          `${API_URL}/attendance/percentage?subjectId=${subjectId}`
+          `${API_URL}/attendance/percentage?subjectId=${subjectId}&branch=${branch}&semester=${semester}`
         );
 
         const data = await response.json();
@@ -44,7 +46,7 @@ const API_URL = "http://localhost:5000/api";
     };
 
     fetchPercentage();
-  }, [subjectId]);
+  }, [subjectId, branch, semester]);
 
   if (loading) {
     return (
@@ -56,9 +58,18 @@ const API_URL = "http://localhost:5000/api";
     );
   }
 
+  if (!subjectId || !branch || !semester) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <p className="text-red-500">
+          Branch, semester and subject are required.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
-
       <div className="mx-auto max-w-4xl">
 
         {/* Header */}
@@ -74,6 +85,10 @@ const API_URL = "http://localhost:5000/api";
           <h1 className="text-2xl font-bold text-gray-900">
             Attendance
           </h1>
+
+          <p className="mt-1 text-sm text-gray-500">
+            {branch} • Semester {semester}
+          </p>
 
           <p className="mt-1 text-sm text-gray-500">
             Student attendance percentage
@@ -101,7 +116,7 @@ const API_URL = "http://localhost:5000/api";
             {students.length === 0 ? (
 
               <div className="p-10 text-center text-gray-500">
-                No attendance records found.
+                No students found.
               </div>
 
             ) : (
@@ -109,7 +124,7 @@ const API_URL = "http://localhost:5000/api";
               students.map((student, index) => (
 
                 <div
-                  key={index}
+                  key={student.studentId || index}
                   className="grid grid-cols-[60px_1fr_120px] items-center border-b px-5 py-4 hover:bg-gray-50"
                 >
 
@@ -117,9 +132,15 @@ const API_URL = "http://localhost:5000/api";
                     {index + 1}
                   </span>
 
-                  <span className="font-semibold text-gray-800">
-                    {student.name}
-                  </span>
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {student.name}
+                    </p>
+
+                    <p className="text-xs text-gray-400">
+                      {student.rollNo}
+                    </p>
+                  </div>
 
                   <span className="text-center font-bold">
                     {student.percentage}%
@@ -136,7 +157,6 @@ const API_URL = "http://localhost:5000/api";
         </div>
 
       </div>
-
     </div>
   );
 }
