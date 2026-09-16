@@ -20,7 +20,7 @@ export default function TeacherLogin() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/teachers/login",
+        "https://attendance-systematnuj.onrender.com/api/teachers/login",
         {
           method: "POST",
           headers: {
@@ -36,16 +36,11 @@ export default function TeacherLogin() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Login failed"
-        );
+        throw new Error(data.message || "Login failed");
       }
 
       // JWT token save
-      localStorage.setItem(
-        "teacherToken",
-        data.token
-      );
+      localStorage.setItem("teacherToken", data.token);
 
       // Teacher information save
       localStorage.setItem(
@@ -65,12 +60,9 @@ export default function TeacherLogin() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
 
-        {/* Heading */}
         <div className="mb-8 text-center">
-
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-black text-xl text-white">
             T
           </div>
@@ -82,23 +74,16 @@ export default function TeacherLogin() {
           <p className="mt-2 text-sm text-gray-500">
             Login to manage student attendance
           </p>
-
         </div>
 
-        {/* Error */}
         {error && (
           <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
             {error}
           </div>
         )}
 
-        {/* Form */}
-        <form
-          onSubmit={handleLogin}
-          className="space-y-5"
-        >
+        <form onSubmit={handleLogin} className="space-y-5">
 
-          {/* Email */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
               Email
@@ -107,16 +92,13 @@ export default function TeacherLogin() {
             <input
               type="email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="teacher@gmail.com"
               required
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
               Password
@@ -125,16 +107,13 @@ export default function TeacherLogin() {
             <input
               type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
               required
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
-          {/* Login */}
           <button
             type="submit"
             disabled={loading}
@@ -144,9 +123,7 @@ export default function TeacherLogin() {
           </button>
 
         </form>
-
       </div>
-
-</div>
-  )
+    </div>
+  );
 }
