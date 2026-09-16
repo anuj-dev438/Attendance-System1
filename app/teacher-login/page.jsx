@@ -20,7 +20,7 @@ export default function TeacherLogin() {
 
     try {
       const response = await fetch(
-        "https://attendance-systematnuj.onrender.com/api/teachers/login",
+        "https://attendance-system1-cqjc.onrender.com/api/teachers/login",
         {
           method: "POST",
           headers: {
@@ -50,9 +50,8 @@ export default function TeacherLogin() {
 
       // Dashboard
       router.push("/teacher");
-
     } catch (error) {
-      setError(error.message);
+      setError(error.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -62,6 +61,7 @@ export default function TeacherLogin() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
 
+        {/* Header */}
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-black text-xl text-white">
             T
@@ -76,14 +76,17 @@ export default function TeacherLogin() {
           </p>
         </div>
 
+        {/* Error */}
         {error && (
           <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
             {error}
           </div>
         )}
 
+        {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-5">
 
+          {/* Email */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
               Email
@@ -94,11 +97,13 @@ export default function TeacherLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="teacher@gmail.com"
+              autoComplete="email"
               required
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
+          {/* Password */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
               Password
@@ -109,11 +114,13 @@ export default function TeacherLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
+              autoComplete="current-password"
               required
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
+          {/* Login Button */}
           <button
             type="submit"
             disabled={loading}

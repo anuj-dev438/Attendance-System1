@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://attendance-systematnuj.onrender.com/api";
 
 function AttendancePercentage() {
   const searchParams = useSearchParams();
